@@ -1,24 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block header %}
+<h1>{%block title %}Home Page{% endblock %}</h1>
+{% endblock %}
 
-    <title>Coup</title>
-</head>
-
-<body>
-    <ul id="messages">
-        {% for message in messages %}
-        <li>{{ message.contents }}</li>
-        {% endfor %}
-    </ul>
-    <input id="message">
-    <button id="sendButton">Send</button>
-
-    {% include "scripts.html" %}
-</body>
-
-</html>
+{% block content %}
+Hello world
+{% endblock %}
