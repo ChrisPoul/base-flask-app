@@ -1,3 +1,4 @@
-from App import app, socketio
+from App import create_app
 
-socketio.run(app, debug=True)
+app = create_app()
+app.run(debug=True)
