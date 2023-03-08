@@ -1,5 +1,5 @@
 import os
-from Chat import app
+from App import app
 
 db_dialect = os.environ.get('DB_DIALECT', default='mysql')
 db_host = os.environ.get('DB_HOST', default='localhost')

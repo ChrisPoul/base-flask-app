@@ -1,3 +1,3 @@
-from Chat import app, socketio
+from App import app, socketio
 
 socketio.run(app, debug=True)
