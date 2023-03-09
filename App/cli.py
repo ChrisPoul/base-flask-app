@@ -42,7 +42,8 @@ def create_user(name: str):
 def delete_user(id: str, name: str):
     if id:
         user = User.get(id)
-    user = User.get_by(name=name)
+    else:
+        user = User.get_by(name=name)
     if user:
         user.delete()
         click.echo(f'User "{name}" deleted succesfuly')

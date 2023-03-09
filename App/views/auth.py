@@ -3,20 +3,12 @@ from flask import (
     redirect, url_for
 )
 from flask_login import login_user
-from .models.user import User
+from App.models.user import User
 
-bp = Blueprint('home', __name__)
-
-
-@bp.route('/')
-def index():
-
-    return render_template(
-        "index.html"
-    )
+auth_bp = Blueprint('auth', __name__)
 
 
-@bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will

@@ -61,3 +61,10 @@ class TestGetUser(UserCLITest):
         )
 
         self.assertIn(self.user.id, result.output)
+
+    def test_should_not_retu(self):
+        result: Result = self.cli.invoke(
+            args=["user", "get", "--name", self.user.name]
+        )
+
+        self.assertIn(self.user.id, result.output)

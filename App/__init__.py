@@ -33,9 +33,18 @@ def _configure_app(app: Flask, test_config: Union[Mapping, None] = None):
     from .auth import login_manager
     login_manager.init_app(app)
 
+    _configure_cli(app)
+    _configure_blueprints(app)
+
+
+def _configure_cli(app: Flask):
     from .cli import database_cli, user_cli
     app.cli.add_command(database_cli)
     app.cli.add_command(user_cli)
 
-    from .views import bp
-    app.register_blueprint(bp)
+
+def _configure_blueprints(app: Flask):
+    from .views import home_bp
+    app.register_blueprint(home_bp)
+    from .views.auth import auth_bp
+    app.register_blueprint(auth_bp)
