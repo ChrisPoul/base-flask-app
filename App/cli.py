@@ -53,3 +53,14 @@ def list_users():
     users = User.all()
     for user in users:
         click.echo(f"username: {user.name}")
+
+
+@user_cli.command("get")
+@click.option("--id")
+@click.option("--name")
+def get_user(id: str, name: str):
+    if id:
+        user = User.get(id)
+    else:
+        user = User.get_by(name=name)
+    click.echo(user)

@@ -1,10 +1,12 @@
 from datetime import datetime
+from dataclasses import dataclass
 from sqlalchemy import (
     Column, String, DateTime
 )
 from . import database, Model
 
 
+@dataclass
 class User(database.Model, Model):
     """Some basic user class"""
     id: str = Column(
