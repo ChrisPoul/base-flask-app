@@ -29,7 +29,7 @@ user_cli = AppGroup('user')
 
 
 @user_cli.command("create")
-@click.argument("name")
+@click.option("--name")
 def create_user(name: str):
     user = User(name=name)
     user.add()
@@ -37,9 +37,13 @@ def create_user(name: str):
 
 
 @user_cli.command("delete")
-@click.argument("name")
-def delete_user(name: str):
-    user = User.get_by(name=name)
+@click.option("--id")
+@click.option("--name")
+def delete_user(id: str, name: str):
+    if id:
+        user = User.get(id)
+    else:
+        user = User.get_by(name=name)
     user.delete()
     click.echo(f'User "{name}" deleted succesfuly')
 

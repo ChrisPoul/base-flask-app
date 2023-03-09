@@ -30,15 +30,15 @@ class Model:
         return uuid.uuid4().hex
 
     @classmethod
-    def get(cls: Self, obj_id: str) -> Self:
+    def get(cls: Self, id: str) -> Self:
         """Return an instance based on the given primary key identifier, or None if not found.
         E.g.:
         my_user = User.get("unique_id")
         """
-        if obj_id is None:
+        if id is None:
             return None
 
-        return cls.query.get(obj_id)
+        return cls.query.get(id)
 
     @classmethod
     def all(cls: Self) -> 'list[Self]':

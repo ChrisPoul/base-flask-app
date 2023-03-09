@@ -25,12 +25,21 @@ class TestUserCLI(CLITest):
 
     def test_should_create_user(self):
         NEW_NAME = "New User"
-        self.cli_runner.invoke(args=["user", "create", NEW_NAME])
+        self.cli_runner.invoke(args=["user", "create", "--name", NEW_NAME])
         new_user = User.get_by(name=NEW_NAME)
 
         self.assertIn(new_user, self.db.session)
 
-    def test_should_delete_given_user(self):
-        self.cli_runner.invoke(args=["user", "delete", self.user.name])
+    def test_should_delete_user_given_valid_username(self):
+        self.cli_runner.invoke(
+            args=["user", "delete", "--name", self.user.name]
+        )
+
+        self.assertNotIn(self.user, self.db.session)
+
+    def test_should_delete_user_given_valid_username(self):
+        self.cli_runner.invoke(
+            args=["user", "delete", "--id", self.user.id]
+        )
 
         self.assertNotIn(self.user, self.db.session)
