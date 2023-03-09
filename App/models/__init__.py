@@ -1,4 +1,5 @@
 import uuid
+from typing import Union
 from typing_extensions import Self
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Query
@@ -10,6 +11,9 @@ class Model:
     query: Query
 
     def add(self):
+        """
+        Add this instance to the database
+        """
         database.session.add(self)
         self.save()
 
@@ -19,6 +23,7 @@ class Model:
         self.save()
 
     def save(self):
+        """Save any changes to the database"""
         database.session.commit()
 
     def delete(self):
@@ -30,7 +35,7 @@ class Model:
         return uuid.uuid4().hex
 
     @classmethod
-    def get(cls: Self, id: str) -> Self:
+    def get(cls, id: str) -> Union[Self, None]:
         """Return an instance based on the given primary key identifier, or None if not found.
         E.g.:
         my_user = User.get("unique_id")
@@ -41,14 +46,14 @@ class Model:
         return cls.query.get(id)
 
     @classmethod
-    def all(cls: Self) -> 'list[Self]':
+    def all(cls) -> 'list[Self]':
         """
         Return a list of all instances of the given Model
         """
         return cls.query.all()
 
     @classmethod
-    def get_by(cls: Self, **kwargs) -> Self:
+    def get_by(cls, **kwargs) -> Union[Self, None]:
         """
         Apply the given filtering criterion using keyword expressions.
         e.g.::
@@ -58,7 +63,7 @@ class Model:
         return cls.query.filter_by(**kwargs).first()
 
     @classmethod
-    def get_all_by(cls: Self, **kwargs) -> 'list[Self]':
+    def get_all_by(cls, **kwargs) -> 'list[Self]':
         """
         Apply the given filtering criterion using keyword expressions.
         e.g.::

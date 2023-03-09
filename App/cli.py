@@ -42,10 +42,12 @@ def create_user(name: str):
 def delete_user(id: str, name: str):
     if id:
         user = User.get(id)
+    user = User.get_by(name=name)
+    if user:
+        user.delete()
+        click.echo(f'User "{name}" deleted succesfuly')
     else:
-        user = User.get_by(name=name)
-    user.delete()
-    click.echo(f'User "{name}" deleted succesfuly')
+        click.echo("No user found")
 
 
 @user_cli.command("list")

@@ -1,4 +1,4 @@
-from .. import Test
+from tests import Test
 from App.models.user import User
 
 
