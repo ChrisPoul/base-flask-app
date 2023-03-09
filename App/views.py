@@ -10,8 +10,6 @@ bp = Blueprint('home', __name__)
 
 @bp.route('/')
 def index():
-    user = User.query.first()
-    print(user)
 
     return render_template(
         "index.html"
@@ -24,7 +22,7 @@ def login():
     # client-side form data. For example, WTForms is a library that will
     # handle this for us, and we use a custom LoginForm to validate.
     if True:
-        user = User.query.filter_by(name="Chris").first()
+        user = User.get_by(name="Chris")
         login_user(user)
 
         flash('Logged in successfully.')
