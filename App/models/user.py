@@ -2,7 +2,6 @@ from datetime import datetime
 from sqlalchemy import (
     Column, String, DateTime
 )
-from sqlalchemy.sql import func
 from . import database, Model
 
 
@@ -12,6 +11,7 @@ class User(database.Model, Model):
         String, default=Model.generate_unique_id, primary_key=True
     )
     name: str = Column(String(200), nullable=False, unique=False)
+    joined_on: datetime = Column(DateTime, default=datetime.now)
 
     @property
     def is_authenticated(self):
