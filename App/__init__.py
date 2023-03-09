@@ -1,10 +1,5 @@
 import os
-import sys
 from flask import Flask
-from flask_cors import CORS
-from .models import database
-from .cli import init_database_command
-from .views import bp
 
 
 def create_app():
@@ -24,8 +19,19 @@ def configure_app(app: Flask):
     db_name = os.environ.get('DB_NAME', default='App_db')
     if db_dialect == 'sqlite':
         app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{app.instance_path}/{db_name}.sqlite'
+
+    from flask_cors import CORS
     CORS(app)
 
+    from .models import database
     database.init_app(app)
-    app.cli.add_command(init_database_command)
+
+    from .auth import login_manager
+    login_manager.init_app(app)
+
+    from .cli import database_cli, user_cli
+    app.cli.add_command(database_cli)
+    app.cli.add_command(user_cli)
+
+    from .views import bp
     app.register_blueprint(bp)

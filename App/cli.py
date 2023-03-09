@@ -1,15 +1,51 @@
 import click
-from flask.cli import with_appcontext
+from flask.cli import AppGroup
 from .models import database
+from .models.user import User
+
+database_cli = AppGroup('db')
 
 
+@database_cli.command("init")
 def init_database():
     database.drop_all()
     database.create_all()
-
-
-@click.command('init-db')
-@with_appcontext
-def init_database_command():
-    init_database()
     click.echo('Initialized Database')
+
+
+@database_cli.command("drop")
+def drop_database():
+    database.drop_all()
+    click.echo('Droped Database')
+
+
+@database_cli.command("reset-table")
+@click.argument("table_name")
+def reset_database_table(table_name):
+    click.echo(f'Table "{table_name}" was reset succesfuly')
+
+
+user_cli = AppGroup('user')
+
+
+@user_cli.command("create")
+@click.argument("name")
+def create_user(name: str):
+    user = User(name=name)
+    user.add()
+    click.echo(f'User "{name}" created succesfuly')
+
+
+@user_cli.command("delete")
+@click.argument("name")
+def create_user(name: str):
+    user: User = User.query.filter_by(name=name).first()
+    user.delete()
+    click.echo(f'User "{name}" deleted succesfuly')
+
+
+@user_cli.command("list")
+def create_user():
+    users = User.query.all()
+    for user in users:
+        click.echo(f"username: {user.name}")
