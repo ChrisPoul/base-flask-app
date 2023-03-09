@@ -1,16 +1,20 @@
 import os
+from typing import Mapping, Union
 from flask import Flask
 
 
-def create_app():
+def create_app(test_config: Union[Mapping, None] = None):
     app = Flask(__name__)
-    configure_app(app)
+    _configure_app(app, test_config)
 
     return app
 
 
-def configure_app(app: Flask):
-    app.config.from_pyfile('config.py')
+def _configure_app(app: Flask, test_config: Union[Mapping, None] = None):
+    if test_config:
+        app.config.from_mapping(test_config)
+    else:
+        app.config.from_pyfile('config.py')
     try:
         os.makedirs(app.instance_path)
     except OSError:
