@@ -38,14 +38,14 @@ def create_user(name: str):
 
 @user_cli.command("delete")
 @click.argument("name")
-def create_user(name: str):
+def delete_user(name: str):
     user = User.get_by(name=name)
     user.delete()
     click.echo(f'User "{name}" deleted succesfuly')
 
 
 @user_cli.command("list")
-def create_user():
+def list_users():
     users = User.all()
     for user in users:
         click.echo(f"username: {user.name}")
